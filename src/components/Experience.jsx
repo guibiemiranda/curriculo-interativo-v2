@@ -1,10 +1,12 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { experience, education } from '../data/resume'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 function Row({ item, index }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.1 })
@@ -20,8 +22,8 @@ function Row({ item, index }) {
       transition={{ duration: 0.5, delay: index * 0.07 }}
       style={{
         display: 'grid',
-        gridTemplateColumns: '8rem 1fr',
-        gap: '2rem',
+        gridTemplateColumns: isMobile ? '5.5rem 1fr' : '8rem 1fr',
+        gap: isMobile ? '1rem' : '2rem',
         padding: '1.75rem 0',
         borderBottom: '1px solid var(--border)',
         alignItems: 'start',

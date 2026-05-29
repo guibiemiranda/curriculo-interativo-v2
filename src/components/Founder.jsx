@@ -1,10 +1,12 @@
 import { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { personalInfo } from '../data/resume'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 export function Founder() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.15 })
@@ -21,8 +23,8 @@ export function Founder() {
         transition={{ duration: 0.6 }}
         style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '5rem',
+          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+          gap: isMobile ? '2.5rem' : '5rem',
           alignItems: 'center',
         }}
       >

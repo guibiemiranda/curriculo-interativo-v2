@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Particles } from './Particles'
 import { personalInfo } from '../data/resume'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 async function exportToPDF() {
   const { default: html2canvas } = await import('html2canvas')
@@ -30,6 +31,7 @@ async function exportToPDF() {
 }
 
 export function Hero() {
+  const isMobile = useIsMobile()
   return (
     <section
       id="inicio"
@@ -41,7 +43,7 @@ export function Hero() {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        padding: '0 3rem',
+        padding: isMobile ? '0 1.25rem' : '0 3rem',
       }}
     >
       <Particles />
@@ -94,12 +96,13 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
           style={{
-            fontSize: 'clamp(0.9rem, 2vw, 1.05rem)',
+            fontSize: 'clamp(0.85rem, 3.5vw, 1.05rem)',
             color: 'var(--text-muted)',
-            maxWidth: 'max-content',
-            whiteSpace: 'nowrap',
+            maxWidth: isMobile ? '100%' : 'max-content',
+            whiteSpace: isMobile ? 'normal' : 'nowrap',
             margin: '0 auto 3rem',
             lineHeight: 1.75,
+            textAlign: 'center',
           }}
         >
           {personalInfo.tagline}

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { stats } from '../data/resume'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 function useCountUp(target, isVisible, duration = 1200) {
   const [val, setVal] = useState(0)
@@ -60,6 +61,7 @@ function StatItem({ stat, index, isVisible }) {
 export function Stats() {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setIsVisible(true) }, { threshold: 0.3 })
@@ -70,9 +72,9 @@ export function Stats() {
   return (
     <div ref={ref} style={{
       display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: '2rem',
-      padding: '4rem 3rem',
+      gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+      gap: isMobile ? '2rem 1rem' : '2rem',
+      padding: isMobile ? '3rem 1.25rem' : '4rem 3rem',
       borderTop: '1px solid var(--border)',
       borderBottom: '1px solid var(--border)',
       maxWidth: 1100,

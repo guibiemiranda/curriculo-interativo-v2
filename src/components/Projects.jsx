@@ -2,11 +2,13 @@ import { useRef, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects } from '../data/resume'
 import { ProjectModal } from './ProjectModal'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 function ProjectRow({ item, index, onOpen }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
   const hasModal = !!item.images?.length
+  const isMobile = useIsMobile()
 
   useEffect(() => {
     const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true) }, { threshold: 0.1 })
@@ -22,10 +24,10 @@ function ProjectRow({ item, index, onOpen }) {
       transition={{ duration: 0.55, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
       style={{
         display: 'grid',
-        gridTemplateColumns: '3rem 1fr auto',
+        gridTemplateColumns: isMobile ? '2rem 1fr' : '3rem 1fr auto',
         alignItems: 'start',
-        gap: '2rem',
-        padding: '2rem 0',
+        gap: isMobile ? '1rem' : '2rem',
+        padding: '1.75rem 0',
         borderBottom: '1px solid var(--border)',
         cursor: hasModal ? 'pointer' : 'default',
       }}
@@ -67,19 +69,21 @@ function ProjectRow({ item, index, onOpen }) {
         </div>
       </div>
 
-      <motion.div
-        whileHover={{ x: 3 }}
-        style={{
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.75rem',
-          color: hasModal ? 'var(--accent)' : 'var(--text-muted)',
-          paddingTop: '0.3rem',
-          whiteSpace: 'nowrap',
-          opacity: hasModal ? 1 : 0.4,
-        }}
-      >
-        {hasModal ? 'ver mais →' : 'em breve →'}
-      </motion.div>
+      {!isMobile && (
+        <motion.div
+          whileHover={{ x: 3 }}
+          style={{
+            fontFamily: 'var(--font-mono)',
+            fontSize: '0.75rem',
+            color: hasModal ? 'var(--accent)' : 'var(--text-muted)',
+            paddingTop: '0.3rem',
+            whiteSpace: 'nowrap',
+            opacity: hasModal ? 1 : 0.4,
+          }}
+        >
+          {hasModal ? 'ver mais →' : 'em breve →'}
+        </motion.div>
+      )}
     </motion.div>
   )
 }
