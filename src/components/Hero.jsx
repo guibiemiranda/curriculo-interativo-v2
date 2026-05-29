@@ -115,7 +115,7 @@ export function Hero() {
           transition={{ delay: 0.55, duration: 0.5 }}
           style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}
         >
-          <button id="pdf-btn" className="btn-primary" onClick={exportToPDF}>
+          <button id="pdf-btn" className="btn-primary">
             Download PDF →
           </button>
           <a href={personalInfo.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-outline">
